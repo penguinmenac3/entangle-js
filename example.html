@@ -1,0 +1,18 @@
+<html>
+
+<header>
+  <script src="entangle.js"></script>
+  <!--<script type="text/javascript">remote_entanglement("localhost", 12345, "42", null)</script>-->
+  <script type="text/javascript">
+    function callback (entanglement) {
+      entanglement.set("test", "Hello from JS!");
+    }
+    local_entanglement(callback)
+  </script>
+</header>
+
+<body>
+  <div entanglement="test">Hello html</div>
+</body>
+
+</html>
