@@ -10,7 +10,7 @@ You can connect entanglements even cross programming language.
 You can see the documentation below or simply look at some examples.
 
 A complete website with an entanglement can be found [here](https://github.com/penguinmenac3/entangle-js/blob/master/example.html).
-If you use remote entanglement you will need an server for example written in [entangle-python](https://github.com/penguinmenac3/entangle-js).
+If you use remote entanglement you will need an server for example written in [entangle-python](https://github.com/penguinmenac3/entangle-python).
 Check out [this script](https://github.com/penguinmenac3/entangle-python/blob/master/example_server.py) if you want to write a python entanglement server.
 
 
