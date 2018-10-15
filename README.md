@@ -1,8 +1,22 @@
 # Entangle-JS [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
+Did you find syncing your javascript variables with html elements annoying.
+Or did you ever think syncing variables between two processes (anywhere in the world) is difficult?
+Entangle-JS is your solution.
+It enables you to entangle two variables across processes and to a special html entanglement tag.
+One needs to launch an entanglement server and one an entanglement client.
+You can connect entanglements even cross programming language.
+
+You can see the documentation below or simply look at some examples.
+
+A complete website with an entanglement can be found [here](https://github.com/penguinmenac3/entangle-js/blob/master/example.html).
+If you use remote entanglement you will need an server for example written in [entangle-python](https://github.com/penguinmenac3/entangle-js).
+Check out [this script](https://github.com/penguinmenac3/entangle-python/blob/master/example_server.py) if you want to write a python entanglement server.
+
+
 ## Setup
 
-Copy the entangle.js file into your project.
+Simply copy the [entangle.js](https://github.com/penguinmenac3/entangle-js/blob/master/entangle.js) file into your project and add a script tag as shown in the usage section.
 
 ## Usage
 
