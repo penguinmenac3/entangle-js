@@ -38,9 +38,11 @@ function isFunction(functionToCheck) {
 }
 
 
-function Entanglement(connection) {
+function Entanglement(connection=null, info=null) {
     var that = this;
     var values = {};
+
+    this.info = info;
 
     var dom_variables = {};
     document.querySelectorAll('[entanglement]').forEach(function(element) {
@@ -98,34 +100,41 @@ function Entanglement(connection) {
     return this;
 }
 
-function remote_entanglement(url, port, passwd, callback) {
+function on_load(callback) {
   window.addEventListener("load", function(event) {
-    connect(url, port, passwd, callback)
+    callback();
   });
 }
 
-function local_entanglement(callback) {
-  window.addEventListener("load", function(event) {
-    callback(Entanglement(null));
-  });
+function local_entanglement(on_entangle) {
+  on_entangle(Entanglement());
 }
 
-function connect(url, port, passwd, callback) {
+function remote_entanglement(url, port, user, passwd, on_entangle, on_fail=null, info=null) {
     var that = this;
     var ws = new WebSocket("ws://" + url + ":" + port + "");
     var isReady = false;
-    var entanglement = Entanglement(that);
+    var entanglement = Entanglement(that, info);
+
+    ws.onclose = function() {
+      if (isFunction(on_fail)) {
+        on_fail(info);
+      }
+      isReady = false;
+      console.log("Closed connection.");
+      entanglement.on_closed();
+    };
 
     ws.onopen = function() {
         var salt = makeid(10);
         var bitArray = sjcl.hash.sha256.hash(passwd + salt);
         var hashedPW = sjcl.codec.hex.fromBits(bitArray)
-        ws.send(hashedPW + " " + salt);
+        ws.send(user + " " + hashedPW + " " + salt);
         isReady = true;
-        if (isFunction(callback)) {
-          callback(entanglement);
+        if (isFunction(on_entangle)) {
+          on_entangle(entanglement, info);
         }
-    }
+    };
 
     ws.onmessage = function(data) {
         if(data.data != "") {
@@ -155,12 +164,6 @@ function connect(url, port, passwd, callback) {
               }
             }
         }
-    };
-
-    ws.onclose = function() {
-        isReady = false;
-        console.log("Closed connection.");
-        entanglement.on_closed();
     };
 
     this.send = function(packet) {
